@@ -17,3 +17,4 @@
 /home/moein/Desktop/linuxDev/WebScraperCS/obj/Debug/net8.0/WebScraperCS.csproj.AssemblyReference.cache
 /home/moein/Desktop/linuxDev/WebScraperCS/obj/Debug/net8.0/WebScrap.5526B1FB.Up2Date
 /home/moein/Desktop/linuxDev/WebScraperCS/bin/Debug/net8.0/CsvHelper.dll
+/home/moein/Desktop/linuxDev/WebScraperCS/obj/Debug/net8.0/WebScraperCS.sourcelink.json

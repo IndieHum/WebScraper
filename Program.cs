@@ -24,10 +24,10 @@ namespace WebScrap
         this.Price = price;
       }
 
-      // public override string ToString()
-      // {
-      //   return $"[/n/tUrl: {this.Url}/n/tImage Url:{this.Image}/n/tName: {this.Name}/n/tPrice: {this.Price}";
-      // }
+      public override string ToString()
+      {
+        return $"[\n\turl: {this.Url}\n\timage Url:{this.Image}\n\tname: {this.Name}\n\tprice: {this.Price}\n]";
+      }
     }
 
     static void Main(string[] args)
@@ -40,14 +40,16 @@ namespace WebScrap
         var products = new List<Product>();
         var productEle = Document.QuerySelectorAll("li.product");
 
+        if (productEle == null || productEle.Count == 0) { Console.WriteLine("Products are null"); return; }
+
         foreach (var p in productEle)
         {
           try
           {
             var url = HtmlEntity.DeEntitize(p.SelectSingleNode("a")?.Attributes["href"].Value);
             var img = HtmlEntity.DeEntitize(p.SelectSingleNode(".//img")?.Attributes["src"].Value);
-            var name = HtmlEntity.DeEntitize(p.SelectSingleNode("//h2")?.InnerText);
-            var price = HtmlEntity.DeEntitize(p.SelectSingleNode("//span")?.InnerText);
+            var name = HtmlEntity.DeEntitize(p.SelectSingleNode(".//h2")?.InnerText);
+            var price = HtmlEntity.DeEntitize(p.SelectSingleNode(".//span")?.InnerText);
 
             var product = new Product(url, img, name, price);
             products.Add(product);
@@ -58,6 +60,11 @@ namespace WebScrap
           }
         }
 
+        foreach (var p in products)
+        {
+          Console.WriteLine(p);
+        }
+
         string outputPath = "product.csv";
         using (var writer = new StreamWriter(outputPath))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
@@ -65,7 +72,7 @@ namespace WebScrap
           csv.WriteRecords(products);
         }
 
-        Console.WriteLine($"Products Found, Writen in {outputPath}");
+        Console.WriteLine($"Products Found, Written in {outputPath}");
       }
       catch (System.Exception err)
       {
